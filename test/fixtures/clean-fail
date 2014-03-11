@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/",
+    "port": 4000
+  }, 
+  "response": {
+    "body": "Goodbye World\n",
+    "headers": {
+      "content-type": "text/plain"
+    },
+    "statusCode": 200 
+  }
+}
