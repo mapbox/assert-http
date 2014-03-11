@@ -13,8 +13,16 @@
       "mocha": "1.17.x"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha"
   },
-  "author": "Mapbox",
+  "author": {
+    "name": "Mapbox",
+    "email": "info@mapbox.com",
+    "url": "http://mapbox.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mapbox/assert-http.git"
+  },
   "license": "BSD"
 }
