@@ -200,24 +200,24 @@ module.exports.runtest = function(test, opts, callback) {
                 case '.txt':
                 case '.html':
                 case '.kml':
-                    assert.equal(expected, clean.call({}, 'body', response.body));
+                    assert.equal(clean.call({}, 'body', response.body), expected);
                     break;
                 case '.json':
-                    assert.deepEqual(expected, JSON.parse(JSON.stringify(JSON.parse(response.body), clean)));
+                    assert.deepEqual(JSON.parse(JSON.stringify(JSON.parse(response.body), clean)), expected);
                     break;
                 case '.jsonp':
                     var cbA = expected.toString().match(/^[a-z]+/)[0];
                     var cbB = response.body.match(/^[a-z]+/)[0];
                     assert.deepEqual(
-                        eval('function '+cbA+'(d) { return d; }; ' + expected),
-                        eval('function '+cbB+'(d) { return d; }; ' + response.body));
+                        eval('function '+cbB+'(d) { return d; }; ' + response.body),
+                        eval('function '+cbA+'(d) { return d; }; ' + expected));
                     break;
                 case '.js':
                 case '.css':
-                    assert.equal(expected, response.body);
+                    assert.equal(response.body, expected);
                     break;
                 case '.pbf':
-                    assert.deepEqual(fs.readFileSync(test.filepath + extname), new Buffer(response.body, 'binary'));
+                    assert.deepEqual(new Buffer(response.body, 'binary'), fs.readFileSync(test.filepath + extname));
                     break;
                 case '.png':
                 case '.jpg':

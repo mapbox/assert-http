@@ -31,8 +31,8 @@ assert.response = function(req, res, callback) {
                 // Assert response status
                 if (typeof res.statusCode === 'number') {
                     assert.equal(
-                        response.statusCode,
                         res.statusCode,
+                        response.statusCode,
                         'Invalid response status code.\n' +
                             '     Expected: ' + res.statusCode + '\n' +
                             '     Got: ' + response.statusCode + ' ' + response.body
