@@ -9,7 +9,7 @@ With [mocha](http://visionmedia.github.io/mocha/), usage looks like;
 
 ```
 describe('api server', function(done) {
-    fixtures.load('/path/to/tests/`).forEach(function(test) {
+    fixtures.load('/path/to/tests/').forEach(function(test) {
         it(test.name, function(done) {
             fixtures.runtest(test, {handlers: handlers, clean: clean}, done);
         });
