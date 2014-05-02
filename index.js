@@ -286,6 +286,7 @@ module.exports.runtest = function(test, opts, callback) {
 };
 
 // Image comparison.
+module.exports.imageEqualsFile = imageEqualsFile;
 function imageEqualsFile(buffer, fixture, callback) {
     var fixturesize = fs.statSync(fixture).size;
     var sizediff = Math.abs(fixturesize - buffer.length) / fixturesize;
