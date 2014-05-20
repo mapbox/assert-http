@@ -139,10 +139,6 @@ module.exports.runtest = function(test, opts, callback) {
                 extname = '.html';
             } else if (/text\/css/.test(response.headers['content-type'])) {
                 extname = '.css';
-            // @TODO... check whether it is ok to serve jsonp with content-type
-            // 'application/json' ... my guess is not.
-            } else if (/json/.test(response.headers['content-type']) && /jsonp|callback=/.test(req.path)) {
-                extname = '.jsonp';
             } else if (/json/.test(response.headers['content-type'])) {
                 extname = '.json';
             } else if (/text\/javascript/.test(response.headers['content-type'])) {
