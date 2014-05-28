@@ -1,6 +1,6 @@
 var http = require('http');
 var util = require('util');
-var assert = require('assert');
+var assert = require('assert-diff');
 
 assert.response = function(req, res, callback) {
     // res argument is optional.
