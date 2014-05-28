@@ -5,7 +5,7 @@ var http = require('http');
 var path = require('path');
 var util = require('util');
 var crypto = require('crypto');
-var assert = require('assert');
+var assert = require('assert-diff');
 var request = require('request');
 var gm = require('gm');
 var mkdirp = require('mkdirp');
@@ -114,7 +114,7 @@ module.exports.runtest = function(test, opts, callback) {
     var fixture = test.fixture || JSON.parse(fs.readFileSync(test.filepath, 'utf8'));
 
     dirty(fixture, opts.handlers, function(err, req, res) {
-        if (err) return callback(err);
+        if (err) return callback(err, req, res);
 
         // Body comparison done outside of assert.response.
         delete res.body;
@@ -160,7 +160,7 @@ module.exports.runtest = function(test, opts, callback) {
                 if (/Invalid response header/.test(err.message) && updateFixtures) {
                     return needsupdate();
                 } else {
-                    return callback(err);
+                    return callback(err, req, response);
                 }
             }
 
@@ -187,7 +187,7 @@ module.exports.runtest = function(test, opts, callback) {
                     console.error(e);
                     return needsupdate();
                 } else {
-                    return callback(e);
+                    return callback(e, req, response);
                 }
             }
 
@@ -231,7 +231,7 @@ module.exports.runtest = function(test, opts, callback) {
                     console.error(e);
                     return needsupdate();
                 } else {
-                    return callback(e);
+                    return callback(e, req, response);
                 }
             }
 
