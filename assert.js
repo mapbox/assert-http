@@ -1,8 +1,11 @@
 var http = require('http');
 var util = require('util');
 var assert = require('assert-diff');
+var _ = require('underscore');
 
-assert.response = function(req, res, callback) {
+var assertplus = module.exports = {};
+
+assertplus.response = function(req, res, callback) {
     // res argument is optional.
     callback = callback || (typeof res === 'function' ? res : function() {});
 
@@ -87,7 +90,7 @@ assert.response = function(req, res, callback) {
             callback(err, response);
         });
     });
-
     request.end();
-
 };
+
+assertplus = _(assertplus).extend(assert);

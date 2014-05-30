@@ -5,12 +5,12 @@ var http = require('http');
 var path = require('path');
 var util = require('util');
 var crypto = require('crypto');
-var assert = require('assert-diff');
 var request = require('request');
 var gm = require('gm');
 var mkdirp = require('mkdirp');
-require('./assert');
 
+//export the extended assert
+var assert = module.exports.assert =require('./assert');
 var updateFixtures = false;
 module.exports.updateFixtures = function() {
     updateFixtures = true;
