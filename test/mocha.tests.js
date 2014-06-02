@@ -1,7 +1,7 @@
 var http = require('http');
 var path = require('path');
-var assert = require('assert');
-var assertHTTP = require('../index.js');
+var assertHTTP = require('../');
+var assert = assertHTTP.assert;
 
 describe('assert.response', function() {
 
