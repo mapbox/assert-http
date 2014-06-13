@@ -8,6 +8,7 @@ var crypto = require('crypto');
 var request = require('request');
 var gm = require('gm');
 var mkdirp = require('mkdirp');
+var os = require('os');
 
 //export the extended assert
 var assert = module.exports.assert =require('./assert');
@@ -289,7 +290,7 @@ function imageEqualsFile(buffer, fixture, callback) {
     if (sizediff > 0.10) {
         return callback(new Error('Image size is too different from fixture: ' + buffer.length + ' vs. ' + fixturesize));
     }
-    var dir = '/tmp/tilestream-pro-compare';
+    var dir = path.join(os.tmpdir(),'image-compare');
     var actual = path.join(dir, md5(buffer));
     mkdirp(dir, function(err) {
         if (err) return callback(err);

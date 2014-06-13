@@ -147,7 +147,7 @@ describe('assertHTTP.imageEqualsFile', function() {
             done();
         });
     });
-    it('pass when identical', function(done) {
+    it('fail when different', function(done) {
         assertHTTP.imageEqualsFile(a, __dirname + '/fixtures/b.png', function(err) {
             assert.ok(err);
             assert.ok(/Error: Image is too different from fixture/.test(err.toString()));
