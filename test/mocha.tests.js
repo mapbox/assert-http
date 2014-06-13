@@ -140,15 +140,17 @@ describe('assertHTTP.runtest', function() {
 });
 
 describe('assertHTTP.imageEqualsFile', function() {
-    var a = fs.readFileSync(__dirname + '/fixtures/a.png');
+    var apath = path.join(__dirname,'fixtures','a.png');
+    var bpath = path.join(__dirname,'fixtures','b.png');
+    var a = fs.readFileSync(apath);
     it('pass when identical', function(done) {
-        assertHTTP.imageEqualsFile(a, __dirname + '/fixtures/a.png', function(err) {
+        assertHTTP.imageEqualsFile(a, apath, function(err) {
             assert.ifError(err);
             done();
         });
     });
     it('fail when different', function(done) {
-        assertHTTP.imageEqualsFile(a, __dirname + '/fixtures/b.png', function(err) {
+        assertHTTP.imageEqualsFile(a, bpath, function(err) {
             assert.ok(err);
             assert.ok(/Error: Image is too different from fixture/.test(err.toString()));
             done();
