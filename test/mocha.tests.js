@@ -1,3 +1,4 @@
+var fs = require('fs');
 var http = require('http');
 var path = require('path');
 var assertHTTP = require('../');
@@ -134,6 +135,23 @@ describe('assertHTTP.runtest', function() {
                 }
                 done();
             });
+        });
+    });
+});
+
+describe('assertHTTP.imageEqualsFile', function() {
+    var a = fs.readFileSync(__dirname + '/fixtures/a.png');
+    it('pass when identical', function(done) {
+        assertHTTP.imageEqualsFile(a, __dirname + '/fixtures/a.png', function(err) {
+            assert.ifError(err);
+            done();
+        });
+    });
+    it('pass when identical', function(done) {
+        assertHTTP.imageEqualsFile(a, __dirname + '/fixtures/b.png', function(err) {
+            assert.ok(err);
+            assert.ok(/Error: Image is too different from fixture/.test(err.toString()));
+            done();
         });
     });
 });
