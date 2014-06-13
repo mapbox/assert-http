@@ -14,7 +14,7 @@
     "mocha": "1.17.x"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha -R spec"
   },
   "author": {
     "name": "Mapbox",
