@@ -9,7 +9,6 @@ install:
   - node --version
   - npm --version
   - node -e "console.log('node version ' + process.version + ', architecture ' + process.arch);"
-  - cinst graphicsmagick
   - npm install
   - npm test
 
