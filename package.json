@@ -7,7 +7,7 @@
     "underscore": "1.4.x",
     "request": "2.34.x",
     "mkdirp": "0.3.x",
-    "gm": "1.13.x",
+    "mapnik": "~1.4.7",
     "assert-diff": "0.0.4"
   },
   "devDependencies": {

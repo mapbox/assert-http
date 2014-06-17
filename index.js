@@ -6,7 +6,7 @@ var path = require('path');
 var util = require('util');
 var crypto = require('crypto');
 var request = require('request');
-var gm = require('gm');
+var mapnik = require('mapnik');
 var mkdirp = require('mkdirp');
 var os = require('os');
 
@@ -290,20 +290,13 @@ function imageEqualsFile(buffer, fixture, callback) {
     if (sizediff > 0.10) {
         return callback(new Error('Image size is too different from fixture: ' + buffer.length + ' vs. ' + fixturesize));
     }
-    var dir = path.join(os.tmpdir(),'image-compare');
-    var actual = path.join(dir, md5(buffer));
-    mkdirp(dir, function(err) {
-        if (err) return callback(err);
-        fs.writeFile(actual, buffer, function(err) {
-            if (err) return callback(err);
-            var tolerance = 0.008;
-            gm.compare(fixture, actual, tolerance, function(err, isEqual, equality, raw) {
-                if (err) return callback(err);
-                if (!isEqual) {
-                    return callback(new Error('Image is too different from fixture: ' + equality + ' > ' + tolerance));
-                }
-                callback();
-            });
-        });
-    });
+    var expectImage = new mapnik.Image.fromBytesSync(fs.readFileSync(fixture));
+    var resultImage = new mapnik.Image.fromBytesSync(buffer);
+    var diff = expectImage.compare(resultImage);
+
+    if (diff > 0) {
+        callback(new Error('Image is too different from fixture: ' + diff));
+    } else {
+        callback();
+    }
 }
