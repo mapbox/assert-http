@@ -7,11 +7,11 @@
     "underscore": "1.4.x",
     "request": "2.34.x",
     "mkdirp": "0.3.x",
-    "mapnik": "~1.4.7",
+    "mapnik": "~1.4.10",
     "assert-diff": "0.0.4"
   },
   "devDependencies": {
-    "mocha": "1.17.x"
+    "mocha": "1.x"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha -R spec"
