@@ -290,7 +290,7 @@ function imageEqualsFile(buffer, fixture, callback) {
     if (sizediff > 0.10) {
         return callback(new Error('Image size is too different from fixture: ' + buffer.length + ' vs. ' + fixturesize));
     }
-    var expectImage = new mapnik.Image.fromBytesSync(fs.readFileSync(fixture));
+    var expectImage = new mapnik.Image.open(fixture);
     var resultImage = new mapnik.Image.fromBytesSync(buffer);
     var diff = expectImage.compare(resultImage);
 
