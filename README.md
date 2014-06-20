@@ -3,6 +3,10 @@ Assert HTTP
 
 Test helpers for testing a HTTP interface. This library contains two primary interfaces; a test runner which executes a set of HTTP calls as described by files in a directory, and a extension to the assert module.
 
+[![Build Status](https://travis-ci.org/mapbox/assert-http.svg)](https://travis-ci.org/mapbox/assert-http)
+
+[![Build status](https://ci.appveyor.com/api/projects/status/6rnqyj048nf5k84g)](https://ci.appveyor.com/project/Mapbox/assert-http)
+
 ## HTTP testing inferface
 
 With [mocha](http://visionmedia.github.io/mocha/), usage looks like;
