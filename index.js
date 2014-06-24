@@ -142,7 +142,7 @@ module.exports.runtest = function(test, opts, callback) {
                 extname = '.css';
             } else if (/json/.test(response.headers['content-type'])) {
                 extname = '.json';
-            } else if (/text\/javascript/.test(response.headers['content-type'])) {
+            } else if (/(application|text)\/javascript/.test(response.headers['content-type'])) {
                 extname = '.js';
             } else if (/png/.test(response.headers['content-type'])) {
                 extname = '.png';
