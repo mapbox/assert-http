@@ -1,6 +1,6 @@
 {
   "name": "assert-http",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "HTTP test fixture helper",
   "main": "index.js",
   "dependencies": {
