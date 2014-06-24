@@ -292,10 +292,13 @@ function imageEqualsFile(buffer, fixture, callback) {
     }
     var expectImage = new mapnik.Image.open(fixture);
     var resultImage = new mapnik.Image.fromBytesSync(buffer);
-    var diff = expectImage.compare(resultImage);
 
-    if (diff > 0) {
-        callback(new Error('Image is too different from fixture: ' + diff));
+    // Allow < 2% of pixels to vary by > default comparison threshold of 16.
+    var pxThresh = resultImage.width() * resultImage.height() * 0.02;
+    var pxDiff = expectImage.compare(resultImage);
+
+    if (pxDiff > pxThresh) {
+        callback(new Error('Image is too different from fixture: ' + pxDiff + ' pixels > ' + pxThresh + ' pixels'));
     } else {
         callback();
     }
