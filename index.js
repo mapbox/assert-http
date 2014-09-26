@@ -283,19 +283,32 @@ module.exports.runtest = function(test, opts, callback) {
 };
 
 // Image comparison.
+var imageEqualsConfig = {
+    threshold: 16,
+    diffsize: 0.10,
+    diffpx: 0.02
+};
+module.exports.imageEqualsConfig = function(options) {
+    if (typeof options === 'undefined') return imageEqualsConfig;
+
+    imageEqualsConfig.threshold = typeof options.threshold !== 'undefined' ? options.threshold : imageEqualsConfig.threshold;
+    imageEqualsConfig.diffsize = typeof options.diffsize !== 'undefined' ? options.diffsize : imageEqualsConfig.diffsize;
+    imageEqualsConfig.diffpx = typeof options.diffpx !== 'undefined' ? options.diffpx : imageEqualsConfig.diffpx;
+    return imageEqualsConfig;
+};
 module.exports.imageEqualsFile = imageEqualsFile;
 function imageEqualsFile(buffer, fixture, callback) {
     var fixturesize = fs.statSync(fixture).size;
     var sizediff = Math.abs(fixturesize - buffer.length) / fixturesize;
-    if (sizediff > 0.10) {
+    if (sizediff > imageEqualsConfig.diffsize) {
         return callback(new Error('Image size is too different from fixture: ' + buffer.length + ' vs. ' + fixturesize));
     }
     var expectImage = new mapnik.Image.open(fixture);
     var resultImage = new mapnik.Image.fromBytesSync(buffer);
 
     // Allow < 2% of pixels to vary by > default comparison threshold of 16.
-    var pxThresh = resultImage.width() * resultImage.height() * 0.02;
-    var pxDiff = expectImage.compare(resultImage);
+    var pxThresh = resultImage.width() * resultImage.height() * imageEqualsConfig.diffpx;
+    var pxDiff = expectImage.compare(resultImage, { threshold: imageEqualsConfig.threshold });
 
     if (pxDiff > pxThresh) {
         callback(new Error('Image is too different from fixture: ' + pxDiff + ' pixels > ' + pxThresh + ' pixels'));
@@ -303,3 +316,5 @@ function imageEqualsFile(buffer, fixture, callback) {
         callback();
     }
 }
+
+

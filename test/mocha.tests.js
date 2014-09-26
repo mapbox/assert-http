@@ -143,6 +143,15 @@ describe('assertHTTP.imageEqualsFile', function() {
     var apath = path.join(__dirname,'fixtures','a.png');
     var bpath = path.join(__dirname,'fixtures','b.png');
     var a = fs.readFileSync(apath);
+    var origconf = assertHTTP.imageEqualsConfig();
+    it('has orig conf', function(done) {
+        assert.deepEqual(assertHTTP.imageEqualsConfig(), {
+            threshold: 16,
+            diffsize: 0.1,
+            diffpx: 0.02
+        });
+        done();
+    });
     it('pass when identical', function(done) {
         assertHTTP.imageEqualsFile(a, apath, function(err) {
             assert.ifError(err);
@@ -153,6 +162,25 @@ describe('assertHTTP.imageEqualsFile', function() {
         assertHTTP.imageEqualsFile(a, bpath, function(err) {
             assert.ok(err);
             assert.ok(/Error: Image is too different from fixture/.test(err.toString()));
+            done();
+        });
+    });
+    it('sets loose conf', function(done) {
+        assertHTTP.imageEqualsConfig({
+            threshold: 16,
+            diffsize: 0.1,
+            diffpx: 0.2
+        });
+        assert.deepEqual(assertHTTP.imageEqualsConfig(), {
+            threshold: 16,
+            diffsize: 0.1,
+            diffpx: 0.2
+        });
+        done();
+    });
+    it('allows greater differences', function(done) {
+        assertHTTP.imageEqualsFile(a, bpath, function(err) {
+            assert.ifError(err);
             done();
         });
     });
