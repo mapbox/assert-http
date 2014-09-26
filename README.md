@@ -44,6 +44,14 @@ Sync version of mkdirp
 
 md5 helper.
 
+### assertHTTP.imageEquals(buffer, buffer, options)
+
+A pixel-by-pixel comparison of two image buffers using the node-mapnik `Image.compare()` API. The options object may contain the keys:
+
+* `threshold`; tolerance level of RGB value difference between two pixels. Defaults to 16.
+* `diffsize`; a float between 0-1 expressing the max allowed difference between buffer lengths. Defaults to 0.1.
+* `diffpx`; a float between 0-1 expressing the max number of pixels allowed to exceed the `threshold` option. Defaults to 0.02.
+
 ## Assertion module extension
 
 ### assert.response(req, res, callback)
