@@ -143,27 +143,11 @@ describe('assertHTTP.imageEqualsFile', function() {
     var apath = path.join(__dirname,'fixtures','a.png');
     var bpath = path.join(__dirname,'fixtures','b.png');
     var a = fs.readFileSync(apath);
+    var b = fs.readFileSync(bpath);
     var origconf = assertHTTP.imageEqualsConfig();
-    it('has orig conf', function(done) {
-        assert.deepEqual(assertHTTP.imageEqualsConfig(), {
-            threshold: 16,
-            diffsize: 0.1,
-            diffpx: 0.02
-        });
+    it('orig conf', function(done) {
+        assert.deepEqual(assertHTTP.imageEqualsConfig(), {});
         done();
-    });
-    it('pass when identical', function(done) {
-        assertHTTP.imageEqualsFile(a, apath, function(err) {
-            assert.ifError(err);
-            done();
-        });
-    });
-    it('fail when different', function(done) {
-        assertHTTP.imageEqualsFile(a, bpath, function(err) {
-            assert.ok(err);
-            assert.ok(/Error: Image is too different from fixture/.test(err.toString()));
-            done();
-        });
     });
     it('sets loose conf', function(done) {
         assertHTTP.imageEqualsConfig({
@@ -178,8 +162,25 @@ describe('assertHTTP.imageEqualsFile', function() {
         });
         done();
     });
+    it('pass when identical', function(done) {
+        assertHTTP.imageEquals(a, a, null, function(err) {
+            assert.ifError(err);
+            done();
+        });
+    });
+    it('fail when different', function(done) {
+        assertHTTP.imageEquals(a, b, null, function(err) {
+            assert.ok(err);
+            assert.ok(/Error: Image is too different from fixture/.test(err.toString()));
+            done();
+        });
+    });
     it('allows greater differences', function(done) {
-        assertHTTP.imageEqualsFile(a, bpath, function(err) {
+        assertHTTP.imageEquals(a, b, {
+            threshold: 16,
+            diffsize: 0.1,
+            diffpx: 0.2
+        }, function(err) {
             assert.ifError(err);
             done();
         });
