@@ -5,9 +5,9 @@
   "main": "index.js",
   "dependencies": {
     "underscore": "1.4.x",
-    "request": "2.34.x",
+    "request": "2.48.x",
     "mkdirp": "0.3.x",
-    "mapnik": "~3.0.0",
+    "mapnik": "3.x",
     "assert-diff": "0.0.4"
   },
   "devDependencies": {
