@@ -218,6 +218,8 @@ module.exports.runtest = function(test, opts, callback) {
                         var resA = eval('function '+cbA+'(d) { return d; }; ' + expected);
                         var resB = eval('function '+cbB+'(d) { return d; }; ' + response.body);
                         assert.deepEqual(JSON.parse(JSON.stringify(resB, clean)), resA);
+                    } else {
+                        assert.equal(response.body, expected);
                     }
                     break;
                 case '.css':
