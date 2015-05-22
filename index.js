@@ -211,6 +211,17 @@ module.exports.runtest = function(test, opts, callback) {
                         eval('function '+cbA+'(d) { return d; }; ' + expected));
                     break;
                 case '.js':
+                    var jsonp = response.body.match(/^[A-z]+\([{["'0-9]/);
+                    if (jsonp) {
+                        var cbA = expected.toString().match(/^[a-z]+/)[0];
+                        var cbB = response.body.match(/^[a-z]+/)[0];
+                        var resA = eval('function '+cbA+'(d) { return d; }; ' + expected);
+                        var resB = eval('function '+cbB+'(d) { return d; }; ' + response.body);
+                        assert.deepEqual(JSON.parse(JSON.stringify(resB, clean)), resA);
+                    } else {
+                        assert.equal(response.body, expected);
+                    }
+                    break;
                 case '.css':
                     assert.equal(response.body, expected);
                     break;
