@@ -1,6 +1,7 @@
 var http = require('http');
 var util = require('util');
 var assert = require('assert-diff');
+var zlib = require('zlib');
 var _ = require('underscore');
 
 var assertplus = module.exports = {};
@@ -25,10 +26,11 @@ assertplus.response = function(req, res, callback) {
     res.statusCode = res.statusCode || res.status;
 
     request.on('response', function(response) {
+        var buffers = [];
         response.body = '';
-        response.setEncoding(encoding);
-        response.on('data', function(chunk) { response.body += chunk; });
+        response.on('data', function(chunk) { buffers.push(chunk); });
         response.on('end', function() {
+            response.body = Buffer.concat(buffers);
             var err = null;
             try {
                 // Assert response status
@@ -83,11 +85,24 @@ assertplus.response = function(req, res, callback) {
                             '    Got: ' + util.inspect(response.body)
                     );
                 }
+                // handle gzipped responses
+                if (response.headers['content-encoding'] == 'gzip') {
+                    zlib.gunzip(response.body, function(err, buffer){
+                        if (err) { return callback(err);
+                        } else {
+                            response.body = buffer.toString(encoding);
+                            return callback(err, response);
+                        }
+                    });
+                } else {
+                    response.body.toString(encoding);
+                    return callback(err, response);
+                }
             }
             catch (e) {
                 err = e;
+                return callback(e);
             }
-            callback(err, response);
         });
     });
     request.end();
