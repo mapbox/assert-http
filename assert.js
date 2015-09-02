@@ -89,20 +89,20 @@ assertplus.response = function(req, res, callback) {
                 // handle gzipped responses
                 if (response.headers['content-encoding'] == 'gzip') {
                     zlib.gunzip(response.body, function(err, buffer){
-                        if (err) { return callback(err);
+                        if (err) {
+                            return callback(err, response);
                         } else {
                             response.body = buffer.toString(encoding);
                             return callback(err, response);
                         }
                     });
                 } else {
-                    response.body.toString(encoding);
+                    response.body = response.body.toString(encoding);
                     return callback(err, response);
                 }
             }
             catch (e) {
-                err = e;
-                return callback(e);
+                return callback(e, response);
             }
         });
     });
