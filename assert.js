@@ -75,6 +75,7 @@ assertplus.response = function(req, res, callback) {
 
                 // Assert response body
                 if (res.body !== undefined) {
+                    response.body = response.body.toString(encoding);
                     var eql = res.body instanceof RegExp ?
                         res.body.test(response.body) :
                         res.body === response.body;
