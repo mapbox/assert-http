@@ -88,7 +88,7 @@ function dirty(fixture, handlers, callback) {
 module.exports.load = function(dirname) {
     return fs.readdirSync(dirname).sort().filter(function(basename) {
         if (basename[0] == '.') return false;
-        return !(/\.(js|json|jsonp|txt|png|jpg|pbf|css|swp|html|kml)$/.test(basename));
+        return !(/\.(js|json|jsonp|txt|png|jpg|pbf|css|swp|html|kml|webp)$/.test(basename));
     }).map(function(basename) {
         var filepath = dirname + '/' + basename, fixture;
         try {
