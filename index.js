@@ -153,7 +153,10 @@ module.exports.runtest = function(test, opts, callback) {
                 extname = '.pbf';
             } else if (/kml/.test(response.headers['content-type'])) {
                 extname = '.kml';
+            } else if(/webp/.test(response.headers['content-type'])) {
+                extname = '.webp';
             }
+
 
             // For status code differences, throw -- it's up to the developer
             // to update the expected status code, test again, and let the
@@ -195,49 +198,50 @@ module.exports.runtest = function(test, opts, callback) {
 
             if (expected) try {
                 switch (extname) {
-                case '.txt':
-                case '.html':
-                case '.kml':
-                    assert.equal(clean.call({}, 'body', response.body), expected);
-                    break;
-                case '.json':
-                    assert.deepEqual(JSON.parse(JSON.stringify(JSON.parse(response.body), clean)), expected);
-                    break;
-                case '.jsonp':
-                    var cbA = expected.toString().match(/^[a-z]+/)[0];
-                    var cbB = response.body.match(/^[a-z]+/)[0];
-                    assert.deepEqual(
-                        eval('function '+cbB+'(d) { return d; }; ' + response.body),
-                        eval('function '+cbA+'(d) { return d; }; ' + expected));
-                    break;
-                case '.js':
-                    var jsonp = response.body.match(/^[A-z]+\([{["'0-9]/);
-                    if (jsonp) {
+                    case '.txt':
+                    case '.html':
+                    case '.kml':
+                        assert.equal(clean.call({}, 'body', response.body), expected);
+                        break;
+                    case '.json':
+                        assert.deepEqual(JSON.parse(JSON.stringify(JSON.parse(response.body), clean)), expected);
+                        break;
+                    case '.jsonp':
                         var cbA = expected.toString().match(/^[a-z]+/)[0];
                         var cbB = response.body.match(/^[a-z]+/)[0];
-                        var resA = eval('function '+cbA+'(d) { return d; }; ' + expected);
-                        var resB = eval('function '+cbB+'(d) { return d; }; ' + response.body);
-                        assert.deepEqual(JSON.parse(JSON.stringify(resB, clean)), resA);
-                    } else {
-                        assert.equal(response.body, expected);
-                    }
-                    break;
-                case '.css':
-                    assert.equal(response.body, expected);
-                    break;
-                case '.pbf':
-                    assert.deepEqual(new Buffer(response.body, 'binary'), fs.readFileSync(test.filepath + extname));
-                    break;
-                case '.png':
-                case '.jpg':
-                    return imageEquals(new Buffer(response.body, 'binary'), fs.readFileSync(test.filepath + extname), _imageEqualsConfig, function(err) {
-                        if (err && updateFixtures) {
-                            console.error(err);
-                            return needsupdate();
+                        assert.deepEqual(
+                            eval('function '+cbB+'(d) { return d; }; ' + response.body),
+                            eval('function '+cbA+'(d) { return d; }; ' + expected));
+                        break;
+                    case '.js':
+                        var jsonp = response.body.match(/^[A-z]+\([{["'0-9]/);
+                        if (jsonp) {
+                            var cbA = expected.toString().match(/^[a-z]+/)[0];
+                            var cbB = response.body.match(/^[a-z]+/)[0];
+                            var resA = eval('function '+cbA+'(d) { return d; }; ' + expected);
+                            var resB = eval('function '+cbB+'(d) { return d; }; ' + response.body);
+                            assert.deepEqual(JSON.parse(JSON.stringify(resB, clean)), resA);
+                        } else {
+                            assert.equal(response.body, expected);
                         }
-                        callback(err, req, response);
-                    });
-                    break;
+                        break;
+                    case '.css':
+                        assert.equal(response.body, expected);
+                        break;
+                    case '.pbf':
+                        assert.deepEqual(new Buffer(response.body, 'binary'), fs.readFileSync(test.filepath + extname));
+                        break;
+                    case '.png':
+                    case '.jpg':
+                    case '.webp':
+                        return imageEquals(new Buffer(response.body, 'binary'), fs.readFileSync(test.filepath + extname), _imageEqualsConfig, function(err) {
+                            if (err && updateFixtures) {
+                                console.error(err);
+                                return needsupdate();
+                            }
+                            callback(err, req, response);
+                        });
+                        break;
                 }
             } catch(e) {
                 if (updateFixtures) {
@@ -251,6 +255,7 @@ module.exports.runtest = function(test, opts, callback) {
             function needsupdate() {
                 console.warn('\n');
                 console.warn('  *** Updating fixtures (mismatch at %s)', path.basename(test.filepath));
+                console.warn('ext: %s', extname);
                 console.warn('');
 
                 fixture.response.statusCode = response.statusCode;
@@ -277,6 +282,7 @@ module.exports.runtest = function(test, opts, callback) {
                 case '.png':
                 case '.jpg':
                 case '.pbf':
+                case '.webp':
                     fs.writeFileSync(test.filepath + extname, response.body, 'binary');
                     delete fixture.response.body;
                     break;
