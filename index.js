@@ -20,15 +20,16 @@ module.exports.updateFixtures = function() {
 
 // Return an object with sorted keys.
 function sortKeys(obj) {
-    try {
+    if (Array.isArray(obj)) {
         return obj.map(sortKeys);
-    } catch(e) {}
-    try {
+    } else if (typeof obj === 'object') {
         return Object.keys(obj).sort().reduce(function(memo, key) {
             memo[key] = sortKeys(obj[key]);
             return memo;
         }, {});
-    } catch(e) { return obj; }
+    } else {
+        return obj;
+    }
 }
 
 module.exports.mkdirpSync = mkdirpSync;
