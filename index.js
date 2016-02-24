@@ -89,7 +89,7 @@ function dirty(fixture, handlers, callback) {
 module.exports.load = function(dirname) {
     return fs.readdirSync(dirname).sort().filter(function(basename) {
         if (basename[0] == '.') return false;
-        return !(/\.(js|json|jsonp|txt|png|jpg|pbf|css|swp|html|kml|webp)$/.test(basename));
+        return !(/\.(js|json|jsonp|txt|png|jpg|pbf|mvt|css|swp|html|kml|webp)$/.test(basename));
     }).map(function(basename) {
         var filepath = dirname + '/' + basename, fixture;
         try {
@@ -150,6 +150,8 @@ module.exports.runtest = function(test, opts, callback) {
                 extname = '.png';
             } else if (/jpeg/.test(response.headers['content-type'])) {
                 extname = '.jpg';
+            } else if (/mapbox-vector-tile/.test(response.headers['content-type'])) {
+                extname = '.mvt';
             } else if (/protobuf/.test(response.headers['content-type'])) {
                 extname = '.pbf';
             } else if (/kml/.test(response.headers['content-type'])) {
@@ -230,6 +232,7 @@ module.exports.runtest = function(test, opts, callback) {
                         assert.equal(response.body, expected);
                         break;
                     case '.pbf':
+                    case '.mvt':
                         assert.deepEqual(new Buffer(response.body, 'binary'), fs.readFileSync(test.filepath + extname));
                         break;
                     case '.png':
@@ -283,6 +286,7 @@ module.exports.runtest = function(test, opts, callback) {
                 case '.png':
                 case '.jpg':
                 case '.pbf':
+                case '.mvt':
                 case '.webp':
                     fs.writeFileSync(test.filepath + extname, response.body, 'binary');
                     delete fixture.response.body;
