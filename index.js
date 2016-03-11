@@ -135,6 +135,7 @@ module.exports.runtest = function(test, opts, callback) {
         res.clean = clean;
 
         assert.response(req, res, function(err, response) {
+            if (err) return callback(err);
             var extname = '';
             if (/text\/plain/.test(response.headers['content-type'])) {
                 extname = '.txt';
@@ -340,4 +341,3 @@ function imageEquals(buffer, fixture, options, callback) {
         callback();
     }
 }
-

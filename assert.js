@@ -25,6 +25,8 @@ assertplus.response = function(req, res, callback) {
     // Response normalization.
     res.statusCode = res.statusCode || res.status;
 
+    request.on('error', callback);
+
     request.on('response', function(response) {
         var buffers = [];
         response.body = '';
