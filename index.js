@@ -19,6 +19,7 @@ module.exports.updateFixtures = function() {
 };
 
 // Return an object with sorted keys.
+module.exports.sortKeys = sortKeys;
 function sortKeys(obj) {
     if (Array.isArray(obj)) {
         return obj.map(sortKeys);

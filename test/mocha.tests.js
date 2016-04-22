@@ -194,3 +194,12 @@ describe('assertHTTP.imageEqualsFile', function() {
         });
     });
 });
+
+describe('assertHTTP.sortKeys', function() {
+    it('does not break on null values', function(done) {
+        var fixture = JSON.parse(fs.readFileSync(path.join(__dirname,'fixtures','response.json'),'utf8'));
+        var sorted = assertHTTP.sortKeys(fixture);
+        assert.deepEqual(sorted,{"ele":null});
+        done();
+    });
+});
