@@ -23,6 +23,9 @@ function sortKeys(obj) {
     if (Array.isArray(obj)) {
         return obj.map(sortKeys);
     } else if (typeof obj === 'object') {
+        if (obj == null || obj == undefined) {
+            return obj;
+        }
         return Object.keys(obj).sort().reduce(function(memo, key) {
             memo[key] = sortKeys(obj[key]);
             return memo;
