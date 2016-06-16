@@ -4,11 +4,12 @@
   "description": "HTTP test fixture helper",
   "main": "index.js",
   "dependencies": {
-    "underscore": "1.4.x",
-    "request": "2.48.x",
-    "mkdirp": "0.3.x",
+    "assert-diff": "0.0.4",
     "mapnik": "3.x",
-    "assert-diff": "0.0.4"
+    "mkdirp": "0.3.x",
+    "request": "2.48.x",
+    "sort-keys": "^1.1.2",
+    "underscore": "1.4.x"
   },
   "devDependencies": {
     "mocha": "1.x"
