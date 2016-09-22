@@ -9,6 +9,7 @@ var request = require('request');
 var mapnik = require('mapnik');
 var mkdirp = require('mkdirp');
 var os = require('os');
+var sortKeys = module.exports.sortKeys = require('sort-keys');
 var _imageEqualsConfig = {};
 
 //export the extended assert
@@ -17,24 +18,6 @@ var updateFixtures = false;
 module.exports.updateFixtures = function() {
     updateFixtures = true;
 };
-
-// Return an object with sorted keys.
-module.exports.sortKeys = sortKeys;
-function sortKeys(obj) {
-    if (Array.isArray(obj)) {
-        return obj.map(sortKeys);
-    } else if (typeof obj === 'object') {
-        if (obj == null || obj == undefined) {
-            return obj;
-        }
-        return Object.keys(obj).sort().reduce(function(memo, key) {
-            memo[key] = sortKeys(obj[key]);
-            return memo;
-        }, {});
-    } else {
-        return obj;
-    }
-}
 
 module.exports.mkdirpSync = mkdirpSync;
 function mkdirpSync(p, mode) {
