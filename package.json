@@ -1,5 +1,5 @@
 {
-  "name": "assert-http",
+  "name": "@mapbox/assert-http",
   "version": "1.1.4",
   "description": "HTTP test fixture helper",
   "main": "index.js",
