@@ -1,30 +1,30 @@
 {
-  "name": "@mapbox/assert-http",
-  "version": "1.1.4",
-  "description": "HTTP test fixture helper",
-  "main": "index.js",
+  "license": "BSD-2-Clause", 
+  "name": "@mapbox/assert-http", 
+  "repository": {
+    "url": "git@github.com:mapbox/assert-http.git", 
+    "type": "git"
+  }, 
+  "author": {
+    "url": "http://mapbox.com/", 
+    "name": "Mapbox", 
+    "email": "info@mapbox.com"
+  }, 
+  "version": "1.1.4", 
   "dependencies": {
-    "assert-diff": "0.0.4",
-    "mapnik": "3.x",
-    "mkdirp": "0.3.x",
-    "request": "2.48.x",
-    "sort-keys": "^1.1.2",
-    "underscore": "1.4.x"
-  },
-  "devDependencies": {
-    "mocha": "1.x"
-  },
+    "request": "2.48.x", 
+    "mkdirp": "0.3.x", 
+    "sort-keys": "^1.1.2", 
+    "underscore": "1.4.x", 
+    "assert-diff": "0.0.4", 
+    "mapnik": "3.x"
+  }, 
   "scripts": {
     "test": "./node_modules/.bin/mocha -R spec"
-  },
-  "author": {
-    "name": "Mapbox",
-    "email": "info@mapbox.com",
-    "url": "http://mapbox.com/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:mapbox/assert-http.git"
-  },
-  "license": "BSD"
+  }, 
+  "devDependencies": {
+    "mocha": "1.x"
+  }, 
+  "main": "index.js", 
+  "description": "HTTP test fixture helper"
 }
