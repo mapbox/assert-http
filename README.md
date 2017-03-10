@@ -9,7 +9,7 @@ Test helpers for testing a HTTP interface. This library contains two primary int
 
 ## HTTP testing inferface
 
-With [mocha](http://visionmedia.github.io/mocha/), usage looks like;
+With [mocha](http://mochajs.org/), usage looks like;
 
 ```
 describe('api server', function(done) {
