@@ -12,7 +12,7 @@
   }, 
   "version": "1.1.4", 
   "dependencies": {
-    "request": "2.48.x", 
+    "request": "2.78.0", 
     "mkdirp": "0.3.x", 
     "sort-keys": "^1.1.2", 
     "underscore": "1.4.x", 
