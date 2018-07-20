@@ -17,7 +17,7 @@
     "sort-keys": "^1.1.2", 
     "underscore": "1.4.x", 
     "assert-diff": "0.0.4", 
-    "mapnik": "3.x"
+    "mapnik": "^4.0.1"
   }, 
   "scripts": {
     "test": "./node_modules/.bin/mocha -R spec"
