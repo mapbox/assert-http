@@ -13,8 +13,9 @@
   "version": "2.0.0",
   "dependencies": {
     "assert-diff": "0.0.4",
-    "mapnik": "3.x || 4.x",
     "mkdirp": "0.3.x",
+    "pixelmatch": "^4.0.2",
+    "pngjs": "^3.3.3",
     "request": "2.78.0",
     "sort-keys": "^1.1.2",
     "underscore": "1.4.x"

@@ -6,7 +6,8 @@ var path = require('path');
 var util = require('util');
 var crypto = require('crypto');
 var request = require('request');
-var mapnik = require('mapnik');
+var PNG = require('pngjs').PNG;
+var pixelmatch = require('pixelmatch');
 var mkdirp = require('mkdirp');
 var os = require('os');
 var sortKeys = module.exports.sortKeys = require('sort-keys');
@@ -314,17 +315,17 @@ function imageEquals(buffer, fixture, options, callback) {
     if (sizediff > options.diffsize) {
         return callback(new Error('Image size is too different from fixture: ' + buffer.length + ' vs. ' + fixture.length));
     }
-    var expectImage = new mapnik.Image.fromBytesSync(fixture);
-    var resultImage = new mapnik.Image.fromBytesSync(buffer);
+    var expectImage = PNG.sync.read(fixture);
+    var resultImage = PNG.sync.read(buffer);
 
     // Allow < 2% of pixels to vary by > default comparison threshold of 16.
-    var pxThresh = resultImage.width() * resultImage.height() * options.diffpx;
-    var pxDiff = expectImage.compare(resultImage, { threshold: options.threshold });
+    var pxThresh = resultImage.width * resultImage.height * options.diffpx;
+    var diffTile = new PNG({width: resultImage.width, height: resultImage.height});
+    var numDiffPixels = pixelmatch(expectImage.data, resultImage.data, diffTile.data, diffTile.width, diffTile.height);
 
-    if (pxDiff > pxThresh) {
-        callback(new Error('Image is too different from fixture: ' + pxDiff + ' pixels > ' + pxThresh + ' pixels'));
+    if (numDiffPixels > pxThresh) {
+        callback(new Error('Image is too different from fixture: ' + numDiffPixels + ' pixels > ' + pxThresh + ' pixels'));
     } else {
         callback();
     }
 }
-

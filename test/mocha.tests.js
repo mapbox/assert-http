@@ -142,10 +142,10 @@ describe('assertHTTP.runtest', function() {
 describe('assertHTTP.imageEqualsFile', function() {
     var apath = path.join(__dirname,'fixtures','a.png');
     var bpath = path.join(__dirname,'fixtures','b.png');
-    var webppath = path.join(__dirname,'fixtures','tux.webp');
+    var png_path = path.join(__dirname,'fixtures','tux.png');
     var a = fs.readFileSync(apath);
     var b = fs.readFileSync(bpath);
-    var webp = fs.readFileSync(webppath);
+    var png = fs.readFileSync(png_path);
     var origconf = assertHTTP.imageEqualsConfig();
     it('orig conf', function(done) {
         assert.deepEqual(assertHTTP.imageEqualsConfig(), {});
@@ -170,8 +170,8 @@ describe('assertHTTP.imageEqualsFile', function() {
             done();
         });
     });
-    it('pass when identical webp', function(done){
-        assertHTTP.imageEquals(webp, webp, null, function(err){
+    it('pass when identical png', function(done){
+        assertHTTP.imageEquals(png, png, null, function(err){
             assert.ifError(err);
             done();
         });
