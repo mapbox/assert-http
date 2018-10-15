@@ -224,8 +224,6 @@ module.exports.runtest = function(test, opts, callback) {
                         assert.deepEqual(new Buffer(response.body, 'binary'), fs.readFileSync(test.filepath + extname));
                         break;
                     case '.png':
-                    case '.jpg':
-                    case '.webp':
                         return imageEquals(new Buffer(response.body, 'binary'), fs.readFileSync(test.filepath + extname), _imageEqualsConfig, function(err) {
                             if (err && updateFixtures) {
                                 console.error(err);
@@ -234,6 +232,11 @@ module.exports.runtest = function(test, opts, callback) {
                             callback(err, req, response);
                         });
                         break;
+                    case '.jpg':
+                    case '.webp':
+                        throw new Error('assert-http no longer supports jpg and webp')
+                        break;
+
                 }
             } catch(e) {
                 if (updateFixtures) {
@@ -321,10 +324,10 @@ function imageEquals(buffer, fixture, options, callback) {
     // Allow < 2% of pixels to vary by > default comparison threshold of 16.
     var pxThresh = resultImage.width * resultImage.height * options.diffpx;
     var diffTile = new PNG({width: resultImage.width, height: resultImage.height});
-    var numDiffPixels = pixelmatch(expectImage.data, resultImage.data, diffTile.data, diffTile.width, diffTile.height);
+    var pxDiff = pixelmatch(expectImage.data, resultImage.data, diffTile.data, diffTile.width, diffTile.height);
 
-    if (numDiffPixels > pxThresh) {
-        callback(new Error('Image is too different from fixture: ' + numDiffPixels + ' pixels > ' + pxThresh + ' pixels'));
+    if (pxDiff > pxThresh) {
+        callback(new Error('Image is too different from fixture: ' + pxDiff + ' pixels > ' + pxThresh + ' pixels'));
     } else {
         callback();
     }
