@@ -12,18 +12,18 @@
   },
   "version": "2.0.0",
   "dependencies": {
-    "assert-diff": "0.0.4",
+    "assert-diff": "2.0.3",
     "mapnik": "3.x || 4.x",
-    "mkdirp": "0.3.x",
-    "request": "2.78.0",
-    "sort-keys": "^1.1.2",
-    "underscore": "1.4.x"
+    "mkdirp": "0.5.x",
+    "request": "2.88.0",
+    "sort-keys": "^4.0.0",
+    "underscore": "1.9.x"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha -R spec"
   },
   "devDependencies": {
-    "mocha": "1.x"
+    "mocha": "6.x"
   },
   "main": "index.js",
   "description": "HTTP test fixture helper"
