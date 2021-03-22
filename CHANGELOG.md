@@ -1,3 +1,9 @@
+## 3.0.0
+
+- Remove Node 6 support
+- Test on Node 10, 12, and 14
+- Update dependencies
+
 ## 2.0.0
 
 - Drop windows binary support
