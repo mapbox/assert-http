@@ -10,10 +10,10 @@
     "name": "Mapbox",
     "email": "info@mapbox.com"
   },
-  "version": "3.0.0",
+  "version": "3.1.0-dev",
   "dependencies": {
+    "@mapnik/mapnik": "^4.6.1",
     "assert-diff": "^3.0.2",
-    "mapnik": "3.x || 4.x",
     "mkdirp": "^1.0.4",
     "request": "^2.88.2",
     "sort-keys": "^4.2.0",

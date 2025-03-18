@@ -6,7 +6,7 @@ var path = require('path');
 var util = require('util');
 var crypto = require('crypto');
 var request = require('request');
-var mapnik = require('mapnik');
+var mapnik = require('@mapnik/mapnik');
 var mkdirp = require('mkdirp');
 var os = require('os');
 var sortKeys = module.exports.sortKeys = require('sort-keys');
