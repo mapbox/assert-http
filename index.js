@@ -26,7 +26,7 @@ function mkdirpSync(p, mode) {
     while (ps.length) {
         created.push(ps.shift());
         if (created.length > 1 && !fs.existsSync(created.join('/'))) {
-            var err = fs.mkdirSync(created.join('/'), 0755);
+            var err = fs.mkdirSync(created.join('/'), 0o755);
             if (err) return err;
         }
     }

@@ -121,7 +121,8 @@ describe('assertHTTP.runtest', function() {
     var clean = {
         connection: strip,
         date: strip,
-        'transfer-encoding': strip
+        'transfer-encoding': strip,
+        'keep-alive': strip
     };
 
     assertHTTP.load(path.join(__dirname, 'fixtures')).forEach(function(test) {

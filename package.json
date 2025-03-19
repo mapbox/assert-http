@@ -12,7 +12,7 @@
   },
   "version": "3.1.0-dev",
   "dependencies": {
-    "@mapnik/mapnik": "^4.6.1",
+    "@mapnik/mapnik": "^4.6.5",
     "assert-diff": "^3.0.2",
     "mkdirp": "^1.0.4",
     "request": "^2.88.2",
