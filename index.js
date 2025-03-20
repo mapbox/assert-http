@@ -6,7 +6,7 @@ var path = require('path');
 var util = require('util');
 var crypto = require('crypto');
 var request = require('request');
-var mapnik = require('mapnik');
+var mapnik = require('@mapnik/mapnik');
 var mkdirp = require('mkdirp');
 var os = require('os');
 var sortKeys = module.exports.sortKeys = require('sort-keys');
@@ -26,7 +26,7 @@ function mkdirpSync(p, mode) {
     while (ps.length) {
         created.push(ps.shift());
         if (created.length > 1 && !fs.existsSync(created.join('/'))) {
-            var err = fs.mkdirSync(created.join('/'), 0755);
+            var err = fs.mkdirSync(created.join('/'), 0o755);
             if (err) return err;
         }
     }
