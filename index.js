@@ -5,7 +5,6 @@ var http = require('http');
 var path = require('path');
 var util = require('util');
 var crypto = require('crypto');
-var request = require('request');
 var mapnik = require('@mapnik/mapnik');
 var mkdirp = require('mkdirp');
 var os = require('os');
