@@ -1,3 +1,7 @@
+## 3.2.0
+
+- Remove unneeded request dependency
+
 ## 3.0.0
 
 - Remove Node 6 support
